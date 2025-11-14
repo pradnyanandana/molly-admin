@@ -69,6 +69,9 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    supplements: Supplement;
+    results: Result;
+    'research-papers': ResearchPaper;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +80,9 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    supplements: SupplementsSelect<false> | SupplementsSelect<true>;
+    results: ResultsSelect<false> | ResultsSelect<true>;
+    'research-papers': ResearchPapersSelect<false> | ResearchPapersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -158,6 +164,164 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supplements".
+ */
+export interface Supplement {
+  id: number;
+  name: string;
+  dosage?: {
+    cortisol?: number | null;
+    inflammation?: number | null;
+    muscleDamage?: number | null;
+    muscleSoreness?: number | null;
+    oxidativeStress?: number | null;
+    pain?: number | null;
+    sleepQuality?: number | null;
+  };
+  gradeScore?: {
+    cortisol?: string | null;
+    inflammation?: string | null;
+    muscleDamage?: string | null;
+    muscleSoreness?: string | null;
+    oxidativeStress?: string | null;
+    pain?: string | null;
+    sleepQuality?: string | null;
+  };
+  linearScore?: {
+    cortisol?: number | null;
+    inflammation?: number | null;
+    muscleDamage?: number | null;
+    muscleSoreness?: number | null;
+    oxidativeStress?: number | null;
+    pain?: number | null;
+    sleepQuality?: number | null;
+  };
+  maxValues?: {
+    cortisol?: number | null;
+    inflammation?: number | null;
+    muscleDamage?: number | null;
+    muscleSoreness?: number | null;
+    oxidativeStress?: number | null;
+    pain?: number | null;
+    sleepQuality?: number | null;
+  };
+  sumValues?: {
+    cortisol?: number | null;
+    inflammation?: number | null;
+    muscleDamage?: number | null;
+    muscleSoreness?: number | null;
+    oxidativeStress?: number | null;
+    pain?: number | null;
+    sleepQuality?: number | null;
+  };
+  tldr?: {
+    cortisol?: string | null;
+    inflammation?: string | null;
+    muscleDamage?: string | null;
+    muscleSoreness?: string | null;
+    oxidativeStress?: string | null;
+    pain?: string | null;
+    sleepQuality?: string | null;
+  };
+  results?: (number | Result)[] | null;
+  label?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "results".
+ */
+export interface Result {
+  id: number;
+  product: string;
+  supplement: number | Supplement;
+  researchPaper?: (number | null) | ResearchPaper;
+  mainTag?: string | null;
+  subTag?: string | null;
+  benefit?: string | null;
+  benefitValue?: number | null;
+  oxidativeStressFilter?: boolean | null;
+  muscleDamageFilter?: boolean | null;
+  muscleSorenessFilter?: boolean | null;
+  inflammationFilter?: boolean | null;
+  painFilter?: boolean | null;
+  sleepQualityFilter?: boolean | null;
+  cortisolFilter?: boolean | null;
+  cortisolCleaning?: boolean | null;
+  score?: number | null;
+  participants?: number | null;
+  age?: number | null;
+  maxPain?: number | null;
+  year?: number | null;
+  sex?: string | null;
+  bodyType?: string | null;
+  confidence?: string | null;
+  trialDesign?: string | null;
+  trialLength?: string | null;
+  results?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-papers".
+ */
+export interface ResearchPaper {
+  id: number;
+  URL: string;
+  AMEND?: boolean | null;
+  Age?: string | null;
+  Area?: string | null;
+  BodyType?: string | null;
+  CortisolExerciseCleaning?: boolean | null;
+  CreatedTime?: string | null;
+  Effect?: string | null;
+  FilesAndMedia?:
+    | {
+        file?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  FitnessCleaning?: boolean | null;
+  FundingNotes?: string | null;
+  Label?: string | null;
+  LastEditedTime?: string | null;
+  MetaChecked?: boolean | null;
+  NULL?: boolean | null;
+  NumberOfParticipants?: number | null;
+  ParticipantsCortisol?: number | null;
+  ParticipantsInflammation?: number | null;
+  ParticipantsMuscleDamage?: number | null;
+  ParticipantsMuscleSoreness?: number | null;
+  ParticipantsOxidativeStress?: number | null;
+  ParticipantsPain?: number | null;
+  ParticipantsSleepQuality?: number | null;
+  Participants?: string | null;
+  Product?: string | null;
+  RelatedToResults1?: string | null;
+  RelatedToResults2?: string | null;
+  Results?: string | null;
+  Sex?: string | null;
+  Source?: string | null;
+  StudiesCortisol?: number | null;
+  StudiesInflammation?: number | null;
+  StudiesMuscleDamage?: number | null;
+  StudiesMuscleSoreness?: number | null;
+  StudiesOxidativeStress?: number | null;
+  StudiesPain?: number | null;
+  StudiesSleepQuality?: number | null;
+  Supplement?: string | null;
+  TLDR?: string | null;
+  TrialDesign?: string | null;
+  TrialLength?: string | null;
+  Year?: string | null;
+  Confidence?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -170,6 +334,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'supplements';
+        value: number | Supplement;
+      } | null)
+    | ({
+        relationTo: 'results';
+        value: number | Result;
+      } | null)
+    | ({
+        relationTo: 'research-papers';
+        value: number | ResearchPaper;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -252,6 +428,173 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supplements_select".
+ */
+export interface SupplementsSelect<T extends boolean = true> {
+  name?: T;
+  dosage?:
+    | T
+    | {
+        cortisol?: T;
+        inflammation?: T;
+        muscleDamage?: T;
+        muscleSoreness?: T;
+        oxidativeStress?: T;
+        pain?: T;
+        sleepQuality?: T;
+      };
+  gradeScore?:
+    | T
+    | {
+        cortisol?: T;
+        inflammation?: T;
+        muscleDamage?: T;
+        muscleSoreness?: T;
+        oxidativeStress?: T;
+        pain?: T;
+        sleepQuality?: T;
+      };
+  linearScore?:
+    | T
+    | {
+        cortisol?: T;
+        inflammation?: T;
+        muscleDamage?: T;
+        muscleSoreness?: T;
+        oxidativeStress?: T;
+        pain?: T;
+        sleepQuality?: T;
+      };
+  maxValues?:
+    | T
+    | {
+        cortisol?: T;
+        inflammation?: T;
+        muscleDamage?: T;
+        muscleSoreness?: T;
+        oxidativeStress?: T;
+        pain?: T;
+        sleepQuality?: T;
+      };
+  sumValues?:
+    | T
+    | {
+        cortisol?: T;
+        inflammation?: T;
+        muscleDamage?: T;
+        muscleSoreness?: T;
+        oxidativeStress?: T;
+        pain?: T;
+        sleepQuality?: T;
+      };
+  tldr?:
+    | T
+    | {
+        cortisol?: T;
+        inflammation?: T;
+        muscleDamage?: T;
+        muscleSoreness?: T;
+        oxidativeStress?: T;
+        pain?: T;
+        sleepQuality?: T;
+      };
+  results?: T;
+  label?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "results_select".
+ */
+export interface ResultsSelect<T extends boolean = true> {
+  product?: T;
+  supplement?: T;
+  researchPaper?: T;
+  mainTag?: T;
+  subTag?: T;
+  benefit?: T;
+  benefitValue?: T;
+  oxidativeStressFilter?: T;
+  muscleDamageFilter?: T;
+  muscleSorenessFilter?: T;
+  inflammationFilter?: T;
+  painFilter?: T;
+  sleepQualityFilter?: T;
+  cortisolFilter?: T;
+  cortisolCleaning?: T;
+  score?: T;
+  participants?: T;
+  age?: T;
+  maxPain?: T;
+  year?: T;
+  sex?: T;
+  bodyType?: T;
+  confidence?: T;
+  trialDesign?: T;
+  trialLength?: T;
+  results?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-papers_select".
+ */
+export interface ResearchPapersSelect<T extends boolean = true> {
+  URL?: T;
+  AMEND?: T;
+  Age?: T;
+  Area?: T;
+  BodyType?: T;
+  CortisolExerciseCleaning?: T;
+  CreatedTime?: T;
+  Effect?: T;
+  FilesAndMedia?:
+    | T
+    | {
+        file?: T;
+        id?: T;
+      };
+  FitnessCleaning?: T;
+  FundingNotes?: T;
+  Label?: T;
+  LastEditedTime?: T;
+  MetaChecked?: T;
+  NULL?: T;
+  NumberOfParticipants?: T;
+  ParticipantsCortisol?: T;
+  ParticipantsInflammation?: T;
+  ParticipantsMuscleDamage?: T;
+  ParticipantsMuscleSoreness?: T;
+  ParticipantsOxidativeStress?: T;
+  ParticipantsPain?: T;
+  ParticipantsSleepQuality?: T;
+  Participants?: T;
+  Product?: T;
+  RelatedToResults1?: T;
+  RelatedToResults2?: T;
+  Results?: T;
+  Sex?: T;
+  Source?: T;
+  StudiesCortisol?: T;
+  StudiesInflammation?: T;
+  StudiesMuscleDamage?: T;
+  StudiesMuscleSoreness?: T;
+  StudiesOxidativeStress?: T;
+  StudiesPain?: T;
+  StudiesSleepQuality?: T;
+  Supplement?: T;
+  TLDR?: T;
+  TrialDesign?: T;
+  TrialLength?: T;
+  Year?: T;
+  Confidence?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
